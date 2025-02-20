@@ -4,6 +4,7 @@ import random
 import argparse
 
 
+
 def parse_command_line_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument('--config', type=str, default="experiments/config")
@@ -14,6 +15,7 @@ def main(filename):
     kwargs = read_config(filename)
     data_file = kwargs['dataset']
     k = kwargs['k']
+    backhand = kwargs['backhand']
     x, y = read_file(data_file)
     idx_shuffle = [i for i in range(len(x))]
     idx_shuffle = random.sample([i for i in range(len(x))], len(x))
@@ -22,13 +24,12 @@ def main(filename):
     test_size = int(len(x) * .2)
     x_train, x_test = x[:test_size], x[test_size:]
     y_train, y_test = y[:test_size], y[test_size:]
-
-    knn = kNN(k)
+    knn = kNN(k, backhand=backhand)
     knn((x_train, y_train), x_test)
-    print(f"Accuracy: {(sum([i == j for i, j in zip(y_test,
-                                                    knn.predicted)])/len(x_test)): .2f}")
+    print(f"Accuracy: {(sum([i == j for i, j in zip(y_test, knn.predicted)])/len(x_test)): .2f}")
 
 
 if __name__ == "__main__":
+    
     parser = parse_command_line_arguments()
     main(parser.config)

@@ -46,3 +46,6 @@ def test_wrong_constructor():
         kNN(-1)
     with pytest.raises(RuntimeError):
         kNN(1.1)
+    with pytest.raises(ValueError):
+        kNN(1, backhand='numba')
+    
