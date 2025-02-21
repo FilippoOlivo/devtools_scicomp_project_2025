@@ -9,7 +9,7 @@ trainer:
   logger: null
   callbacks: null
   fast_dev_run: false
-  max_epochs: 2
+  max_epochs: null
   min_epochs: null
   max_steps: -1
   min_steps: null
@@ -45,3 +45,4 @@ data: pyclassify.datamodule.CIFAR10DataModule
 optimizer: null
 lr_scheduler: null
 ckpt_path: null
+verbose: true
