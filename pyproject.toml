@@ -1,16 +1,16 @@
 # Choosing a build backend:
+[build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
-
 [project]
-name = "pyclassify"
+name = "ssm"
 version = "0.0.1"
-description = "Development tools for Scientific Computing"
+description = "SSM"
 readme = "README.md"
 requires-python = ">=3.9"
 license = { file = "LICENSE" }
-authors = [{ name = "Filippo Olivo", email = "filippolivo@gmail.com" }]
+authors = [{ name = "Filippo Olivo, Giovanni Canali", email = "folivo@sissa.it, gcanali@sissa.it" }]
 dynamic = ["dependencies"]
 
 [tool.setuptools.packages.find]
