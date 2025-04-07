@@ -173,7 +173,11 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
+
 # Remove data 
 *.dat
 *.data
+
+# For mac 
+*.DS_Store  
 
