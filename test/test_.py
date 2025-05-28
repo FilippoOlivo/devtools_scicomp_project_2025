@@ -1,6 +1,8 @@
 import pytest
+import numpy as np
 from pyclassify.utils import distance, majority_vote
 from pyclassify import kNN
+from pyclassify.utilsnumba import distance_numba, distance_numba_serial
 
 @pytest.mark.parametrize(
     "point1, point2, point3, point4",
@@ -40,9 +42,28 @@ def test_majority_vote():
 
 def test_constructor():
     kNN(3)
+    kNN(3, backhand='plain')
+    kNN(3, backhand='numpy')
+    kNN(3, backhand='numba')
 
 def test_wrong_constructor():
     with pytest.raises(RuntimeError):
         kNN(-1)
     with pytest.raises(RuntimeError):
         kNN(1.1)
+    with pytest.raises(ValueError):
+        kNN(3, backhand='unknown')
+
+def test_distance_numba():
+    point1 = np.array([1., 2., 3.])
+    point2 = np.array([4., 5., 6.])
+    d = distance_numba(point1, point2)
+    assert d >= 0
+    assert d == distance_numba_serial(point1, point2)
+    
+def test_distance_numpy():
+    point1 = np.array([1., 2., 3.])
+    point2 = np.array([4., 5., 6.])
+    d = distance_numba_serial(point1, point2)
+    assert d >= 0
+    assert d == distance_numba(point1, point2)

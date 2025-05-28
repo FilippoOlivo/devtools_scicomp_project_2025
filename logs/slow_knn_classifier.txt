@@ -1,0 +1,75 @@
+Timer unit: 1e-06 s
+
+Total time: 0 s
+File: /Users/filippoolivo/devtools_scicomp_project_2025/src/pyclassify/utils.py
+Function: distance_numpy at line 18
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+    18                                           @profile
+    19                                           def distance_numpy(point1, point2):
+    20                                               if len(point1) != len(point2):
+    21                                                   raise RuntimeError("Lenght of point must be the same")
+    22                                               return float(np.sum((point1 - point2)**2))
+
+Total time: 0 s
+File: /Users/filippoolivo/devtools_scicomp_project_2025/src/pyclassify/utils.py
+Function: distance_numba at line 24
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+    24                                           @profile
+    25                                           @cc.export('distance_numba', 'f8(f8[:], f8[:])')
+    26                                           @njit(parallel=True)
+    27                                           def distance_numba(point1, point2):
+    28                                               distance = 0
+    29                                               n = point1.shape[0]
+    30                                               for ix in prange(n):
+    31                                                   distance += (point1[ix] - point2[ix])**2
+    32                                               return distance
+
+Total time: 0 s
+File: /Users/filippoolivo/devtools_scicomp_project_2025/src/pyclassify/utils.py
+Function: distance_numba_serial at line 34
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+    34                                           @profile
+    35                                           @cc.export('distance_numba_serial', 'f8(f8[:], f8[:])')
+    36                                           @njit(parallel=True)
+    37                                           def distance_numba_serial(point1, point2):
+    38                                               diff = (point1 - point2) ** 2
+    39                                               distance = np.sum(diff)
+    40                                               return distance
+
+Total time: 6.5e-05 s
+File: /Users/filippoolivo/devtools_scicomp_project_2025/src/pyclassify/utils.py
+Function: majority_vote at line 42
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+    42                                           @profile
+    43                                           def majority_vote(neighbors):
+    44       281         27.0      0.1     41.5      total_sum = sum(neighbors)
+    45       281         38.0      0.1     58.5      return 1 if total_sum >= len(neighbors)/2 else 0
+
+Total time: 0.120285 s
+File: /Users/filippoolivo/devtools_scicomp_project_2025/src/pyclassify/utils.py
+Function: distance at line 9
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+     9                                           @profile
+    10                                           def distance(point1, point2):
+    11     19670       1922.0      0.1      1.6      if len(point1) != len(point2):
+    12                                                   raise RuntimeError("Lenght of point must be the same")
+    13     19670       1214.0      0.1      1.0      distance = 0
+    14    688450      54713.0      0.1     45.5      for x1, x2 in zip(point1, point2):
+    15    668780      60232.0      0.1     50.1          distance += (x1-x2)**2
+    16     19670       2204.0      0.1      1.8      return distance
+
+  0.00 seconds - /Users/filippoolivo/devtools_scicomp_project_2025/src/pyclassify/utils.py:18 - distance_numpy
+  0.00 seconds - /Users/filippoolivo/devtools_scicomp_project_2025/src/pyclassify/utils.py:24 - distance_numba
+  0.00 seconds - /Users/filippoolivo/devtools_scicomp_project_2025/src/pyclassify/utils.py:34 - distance_numba_serial
+  0.00 seconds - /Users/filippoolivo/devtools_scicomp_project_2025/src/pyclassify/utils.py:42 - majority_vote
+  0.12 seconds - /Users/filippoolivo/devtools_scicomp_project_2025/src/pyclassify/utils.py:9 - distance
